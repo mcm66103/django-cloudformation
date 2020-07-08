@@ -1,0 +1,17 @@
+{
+  "Parameters" : {
+    "KeyName" : "django-cloudformation-key-pair"
+  },
+  "Tags" : {
+  },
+  "StackPolicy" : {
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "NotAction" : "Update:Delete",
+        "Principal": "*",
+        "Resource" : "*"
+      }
+    ]
+  }
+}
