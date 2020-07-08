@@ -1,0 +1,5 @@
+{
+  "Parameters" : {
+    "KeyName" : "django-cloudformation-key-pair"
+  },
+}
