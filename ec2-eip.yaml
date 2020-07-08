@@ -35,14 +35,6 @@ Parameters:
     Default: 0.0.0.0/0
     AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
     ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
-  WebLocation:
-    Description: The IP address range that can be used to SSH to the EC2 instances
-    Type: String
-    MinLength: '9'
-    MaxLength: '18'
-    Default: 0.0.0.0/0
-    AllowedPattern: (\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})
-    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
   LatestAmiId:
     Type:  'AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>'
     Default: '/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2'
@@ -55,10 +47,10 @@ Resources:
         - ''
         - [IPAddress=, !Ref 'IPAddress']
       InstanceType: !Ref 'InstanceType'
-      SecurityGroups: [!Ref 'InstanceSSHSecurityGroup', !Ref 'InstanceWebSecurityGroup']
+      SecurityGroups: [!Ref 'InstanceSecurityGroup']
       KeyName: !Ref 'KeyName'
       ImageId: !Ref 'LatestAmiId'
-  InstanceSSHSecurityGroup:
+  InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: Enable SSH access
@@ -67,15 +59,10 @@ Resources:
         FromPort: '22'
         ToPort: '22'
         CidrIp: !Ref 'SSHLocation'
-  InstanceWebSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: Enable Web access
-      SecurityGroupIngress:
       - IpProtocol: tcp
         FromPort: '80'
         ToPort: '80'
-        CidrIp: !Ref 'WebLocation'
+        CidrIp: !Ref 'SSHLocation'
   IPAddress:
     Type: AWS::EC2::EIP
   IPAssoc:
