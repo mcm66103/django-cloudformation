@@ -55,7 +55,7 @@ Resources:
         - ''
         - [IPAddress=, !Ref 'IPAddress']
       InstanceType: !Ref 'InstanceType'
-      SecurityGroups: [!Ref 'InstanceSSHSecurityGroup', 'InstanceWebSecurityGroup']
+      SecurityGroups: [!Ref 'InstanceSSHSecurityGroup', !Ref 'InstanceWebSecurityGroup']
       KeyName: !Ref 'KeyName'
       ImageId: !Ref 'LatestAmiId'
   InstanceSSHSecurityGroup:
